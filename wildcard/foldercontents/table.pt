@@ -224,14 +224,14 @@
         </tbody>
         <tfoot tal:condition="not:view/within_batch_size" i18n:domain="plone">
           <tr tal:condition="not:view/show_all">
-            <th colspan="6" class="nosort">
+            <th colspan="7" class="nosort">
               <a tal:attributes="href view/show_all_url"
                  i18n:translate="label_show_all"
                  id="foldercontents-show-all">Show all items</a>
             </th>
           </tr>
           <tr tal:condition="view/show_all">
-            <th colspan="6" class="nosort">
+            <th colspan="7" class="nosort">
               <a tal:attributes="href view/view_url"
                  i18n:translate="label_show_batched"
                  id="foldercontents-show-batched">Show batched</a>

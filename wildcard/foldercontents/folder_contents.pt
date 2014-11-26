@@ -158,6 +158,9 @@
           <div class="row fileupload-buttonbar">
             <div class="span7">
               <!-- The fileinput-button span is used to style the file input field as button -->
+              <p i18n:translate="fileupload_help">
+                Select one or more files. Then start the upload.
+              </p>
               <span class="btn btn-success fileinput-button">
                 <i class="icon-plus icon-white"></i>
                 <span i18n:translate="foldercontents_add_files">Add files...</span>
@@ -182,6 +185,9 @@
         <div id="sort-container" style="display:none">
           <form class="well form-inline" method="POST"
                 tal:attributes="action string:${context/absolute_url}/@@wcfcsort">
+            <p i18n:translate="sort-container-help">
+              This operation re-arranges the order of the objects in this folder permanently.
+            </p>
             <label i18n:translate="foldercontents_sorton">Sort on:</label>
             <select name="on">
               <option value="sortable_title" i18n:translate="foldercontents_title_order">Title</option>

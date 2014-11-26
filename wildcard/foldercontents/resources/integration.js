@@ -46,13 +46,14 @@ fc = {
         });
     },
     reloadPage: function() {
+        console.log("reload");
         fc.showLoading();
         $.ajax({
             url: last_folder_url,
             success: function(data) {
-                $('#listing-table').replaceWith($(data).find('#listing-table'));
-                fc.initialize();
+                $('#content-core').replaceWith($(data).find('#content-core'));
                 fc.hideLoading();
+                fc.initialize();
             }
         });
     },

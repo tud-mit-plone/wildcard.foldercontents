@@ -213,6 +213,14 @@ fc = {
             'formData': {
                 '_authenticator': $('input[name="_authenticator"]').attr('value')
             }
+        }).bind('fileuploadstop', function(e, data)
+        {
+            // clear the upload queue
+            $('#fileupload table tbody.files').empty();
+            // then reload the table
+            fc.reloadPage();
+            // finally hide the form
+            fc.setUploadFormVisibility(false);
         });
     });
 }(jQuery));

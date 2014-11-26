@@ -56,6 +56,28 @@ fc = {
             }
         });
     },
+    setUploadFormVisibility: function(visible) {
+        if (visible) {
+            $('#fileupload').fadeIn();
+            $('#upload-files').addClass('active');
+            fc.setSortContainerVisibility(false);
+        }
+        else {
+            $('#fileupload').fadeOut();
+            $('#upload-files').removeClass('active');
+        }
+    },
+    setSortContainerVisibility: function(visible) {
+        if (visible) {
+            $('#sort-container').fadeIn();
+            $('#sort-folder').addClass('active');
+            fc.setUploadFormVisibility(false);
+        }
+        else {
+            $('#sort-container').fadeOut();
+            $('#sort-folder').removeClass('active');
+        }
+    },
     initialize: function() {
         var start = null;
         if (fc.sortable()) {
@@ -145,11 +167,11 @@ fc = {
             });
 
         $('#upload-files').click(function() {
-            $('#fileupload').fadeIn();
+            fc.setUploadFormVisibility(!$('#upload-files').hasClass('active'));
             return false;
         });
         $('#sort-folder').click(function() {
-            $('#sort-container').fadeIn();
+            fc.setSortContainerVisibility(!$('#sort-folder').hasClass('active'));
             return false;
         });
 

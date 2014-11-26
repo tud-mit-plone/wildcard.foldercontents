@@ -97,10 +97,3 @@
     width: 60px;
   }
 }
-
-/* Fix for Webkit (Safari, Chrome) */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .fileinput-button {
-    margin-top: 2px;
-  }
-}

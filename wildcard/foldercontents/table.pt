@@ -25,14 +25,16 @@
 
     <div class="visualClear" id="clear-space-before-navigation"><!-- --></div>
 
-    <div class="btn-group">
+    <div class="btn-toolbar">
       <tal:buttons tal:repeat="button view/buttons">
-        <input class="context"
-               type="submit"
-               name=""
-               value=""
-               i18n:attributes="value"
-               tal:attributes="value button/title; name button/url; class string:${button/cssclass|nothing} btn" />
+        <div class="btn-group">
+          <input class="context"
+                 type="submit"
+                 name=""
+                 value=""
+                 i18n:attributes="value"
+                 tal:attributes="value button/title; name button/url; class string:${button/cssclass|nothing} btn" />
+        </div>
       </tal:buttons>
       <a tal:condition="not: is_collection" class="btn btn-success" id="upload-files" i18n:translate="foldercontents_uploadfiles">Upload Files</a>
       <a tal:condition="not: is_collection" class="btn btn-danger" id="sort-folder" i18n:translate="foldercontents_sortby">Sort folder by...</a>

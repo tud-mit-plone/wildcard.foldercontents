@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="wildcard.foldercontents">
+
+    <include file="configure.zcml" />
+
+    <genericsetup:registerProfile
+        name="test"
+        title="wildcard.foldercontents tests"
+        directory="profiles/test"
+        description="Steps for wildcard.foldercontents tests"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+</configure>

@@ -29,6 +29,9 @@ setup(
         'jarn.jsi18n',
         'tud.jslib.jquery_migrate',
     ],
+    extras_require={
+        'test': ['plone.app.robotframework']
+    },
     entry_points="""
       # -*- Entry points: -*-
 

@@ -27,6 +27,7 @@ setup(
     install_requires=[
         'setuptools',
         'jarn.jsi18n',
+        'tud.jslib.jquery_migrate',
     ],
     entry_points="""
       # -*- Entry points: -*-

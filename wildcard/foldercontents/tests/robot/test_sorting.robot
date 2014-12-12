@@ -26,7 +26,8 @@ Setup
     Add Page  doc 2
 
 Teardown
-    Delete Content  test
+    Go to  ${PLONE_URL}/test
+    Click Delete Action
     Close all browsers
 
 Click Entry In Sort Menu

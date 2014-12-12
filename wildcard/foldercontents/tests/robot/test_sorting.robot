@@ -34,7 +34,7 @@ Click Entry In Sort Menu
 
     Click Button  css=#foldercontents-display-sortorder>button
     Element Should Contain  css=#foldercontents-display-sortorder>ul  ${name}
-    Click Link  ${name}
+    Click Link  link=${name}
 
 *** Test Cases ***
 
@@ -64,3 +64,17 @@ Check Sorting By Title
     Table Row Should Contain  listing-table  2  doc 2
     Table Row Should Contain  listing-table  3  doc 1
     Click Entry In Sort Menu  Ascending order
+
+Check Manual Reordering
+    Go to  ${PLONE_URL}/test
+    Click Contents In Edit Bar
+    Click Entry In Sort Menu  Folder Order
+    Drag And Drop  folder-contents-item-doc-2  folder-contents-item-doc-3
+    Table Row Should Contain  listing-table  1  doc 2
+    Table Row Should Contain  listing-table  2  doc 3
+    Table Row Should Contain  listing-table  3  doc 1
+    # New order should survive page reload, see if the backend persisted the changes
+    Reload Page
+    Table Row Should Contain  listing-table  1  doc 2
+    Table Row Should Contain  listing-table  2  doc 3
+    Table Row Should Contain  listing-table  3  doc 1

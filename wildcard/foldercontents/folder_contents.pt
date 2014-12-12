@@ -144,20 +144,30 @@
 
       <div class="fc fc-container" tal:attributes="data-context-base-url view/context_base_url">
 
-        <div class="btn-toolbar">
-            <tal:buttons tal:repeat="button view/buttons">
-            <div class="btn-group">
-                <input class="context"
-                    type="submit"
-                    name=""
-                    value=""
-                    i18n:attributes="value"
-                    tal:attributes="value button/title; name button/url; class string:${button/cssclass|nothing} btn" />
-            </div>
-            </tal:buttons>
-            <a tal:condition="not: view/is_collection" class="btn btn-success" id="upload-files" i18n:translate="foldercontents_uploadfiles">Upload Files</a>
-            <a tal:condition="not: view/is_collection" class="btn btn-danger" id="sort-folder" i18n:translate="foldercontents_sortby">Sort folder by...</a>
-        </div>
+
+
+        <form name="folderContentsForm"
+              method="post"
+              action="folder_object"
+              tal:attributes="action context/absolute_url"
+              class="kssattr-serveraction-foldercontents_update_table">
+          <div class="btn-toolbar">
+              <tal:buttons tal:repeat="button view/buttons">
+              <div class="btn-group">
+                  <input class="context"
+                      type="submit"
+                      name=""
+                      value=""
+                      i18n:attributes="value"
+                      tal:attributes="value button/title; name button/url; class string:${button/cssclass|nothing} btn" />
+              </div>
+              </tal:buttons>
+              <a tal:condition="not: view/is_collection" class="btn btn-success" id="upload-files" i18n:translate="foldercontents_uploadfiles">Upload Files</a>
+              <a tal:condition="not: view/is_collection" class="btn btn-danger" id="sort-folder" i18n:translate="foldercontents_sortby">Sort folder by...</a>
+          </div>
+          <div tal:replace="structure view/contents_table"></div>
+          <input tal:replace="structure context/@@authenticator/authenticator" />
+        </form>
 
         <form id="fileupload" action="@@fcjupload" method="POST" enctype="multipart/form-data"
               tal:attributes="action string:${context/absolute_url}/@@fcjupload"
@@ -212,14 +222,6 @@
           </form>
         </div>
 
-        <form name="folderContentsForm"
-              method="post"
-              action="folder_object"
-              tal:attributes="action context/absolute_url"
-              class="kssattr-serveraction-foldercontents_update_table">
-          <div tal:replace="structure view/contents_table"></div>
-          <input tal:replace="structure context/@@authenticator/authenticator" />
-        </form>
       </div>
     </metal:content-core>
 

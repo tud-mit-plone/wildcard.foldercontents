@@ -135,10 +135,6 @@ class NewFolderContentsTable(FolderContentsTable):
 
 class NewFolderContentsView(FolderContentsView):
 
-    def __init__(self, context, request):
-        super(NewFolderContentsView, self).__init__(context, request)
-        self.table = NewFolderContentsTable(aq_inner(self.context), self.request)
-
     @property
     def orderable(self):
         if _is_collection(self.context):
@@ -158,7 +154,8 @@ class NewFolderContentsView(FolderContentsView):
         return super(NewFolderContentsView, self).__call__()
 
     def contents_table(self):
-        return self.table.render()
+        table = NewFolderContentsTable(aq_inner(self.context), self.request)
+        return table.render()
 
     def jstemplates(self):
         """Have to include js templates from view, because tal barfs when it's
@@ -172,13 +169,6 @@ class NewFolderContentsView(FolderContentsView):
         layout = getMultiAdapter((context, self.request), name=u'plone_layout')
         return layout.renderBase()
 
-    @property
-    def buttons(self):
-        return self.table.buttons
-
-    @property
-    def is_collection(self):
-        return _is_collection(self.context)
 
 def getOrdering(context):
     if IPloneSiteRoot.providedBy(context):

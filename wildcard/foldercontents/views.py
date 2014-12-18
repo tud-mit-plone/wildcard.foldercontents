@@ -17,7 +17,9 @@ from plone.app.content.browser.tableview import Table
 from plone.folder.interfaces import IExplicitOrdering
 from urllib import urlencode
 from wildcard.foldercontents import wcfcMessageFactory as _
+from zope.browsermenu.interfaces import IBrowserMenu
 from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.i18n import translate
 from zope.interface import Interface
 import json
@@ -117,7 +119,7 @@ class NewFolderContentsTable(FolderContentsTable):
             self.contentFilter['sort_order'] = 'reverse'
         self.pagesize = int(self.request.get('pagesize', 20))
         self.items = self.folderitems()
-
+        self._add_actions(self.items)
         url = context.absolute_url()
         view_url = '%s/folder_contents?sort_on=%s&sort_order=%s' % (
             url, sort, order)
@@ -132,6 +134,11 @@ class NewFolderContentsTable(FolderContentsTable):
         return self.orderable and self.editable and \
             sort in ('', None, 'getObjPositionInParent')
 
+    def _add_actions(self, items):
+        menu = getUtility(IBrowserMenu, name='plone_contentmenu_actions')
+        for item in items:
+            obj = item['brain'].getObject()
+            item['actions'] = menu.getMenuItems(obj, self.request)
 
 class NewFolderContentsView(FolderContentsView):
 

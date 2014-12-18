@@ -142,7 +142,7 @@
               i18n:domain="plone"
               id="foldercontents-status-column"
               tal:condition="view/show_status_column">&nbsp;<tal:state i18n:translate="listingheader_status">State</tal:state>&nbsp;</th>
-          <th tal:condition="not: is_collection" class="nosort column" i18n:translate="foldercontents_listingheader_sort">Sort</th>
+          <th class="nosort column" i18n:translate="foldercontents_listingheader_actions">Actions</th>
         </tr>
       </thead>
 
@@ -210,12 +210,23 @@
                       tal:attributes="class item/state_class|nothing" />
                 <span tal:condition="not: item/state_title|nothing">&nbsp;</span>
               </td>
-              <td tal:condition="not: is_collection">
+              <td>
                 <div class="btn-group">
                   <button class="btn btn-mini dropdown-toggle" class="allowMultiSubmit"><i class="icon-cog"></i><span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a class="move-top" href="#" i18n:translate="foldercontents_move_top">Move to top</a></li>
                     <li><a class="move-bottom" href="#" i18n:translate="foldercontents_move_bottom">Move to bottom</a></li>
+                    <li class="divider" tal:condition="item/actions"></li>
+                    <tal:doc-actions tal:repeat="menuItem item/actions">
+                      <li>
+                        <a tal:attributes="href menuItem/action;
+                                           class menuItem/extra/class"
+                           tal:content="menuItem/title"
+                           i18n:translate="">
+                          Title
+                        </a>
+                      </li>
+                    </tal:doc-actions>
                   </ul>
                 </div>
               </td>

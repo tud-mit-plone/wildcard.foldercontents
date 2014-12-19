@@ -216,6 +216,16 @@ fc = {
                  width:'50%'
              }
         );
+
+        $('#listing-table a.actionicon-object_buttons-rename').prepOverlay(
+            {
+                 subtype: 'ajax',
+                 filter: common_content_filter,
+                 cssclass: 'overlay-rename',
+                 closeselector: '[name="form.button.Cancel"]',
+                 width:'40%'
+             }
+        );
     }
 };
 

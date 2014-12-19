@@ -79,11 +79,9 @@ Test Renaming
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
     Click Entry In Doc Menu  doc-1  rename
-    # check that we have navigated to 'doc 1' ...
-    Element Should Contain  breadcrumbs-current  doc 1
-    # ... and we are indeed on it's rename form
-    Element Should Contain  css=h1.documentFirstHeading  Rename item
+    Verify Overlay Is Visible
     Click Button  Rename All
+    Verify Overlay Is Gone
     # check we're back
     Element Should Contain  css=h1.documentFirstHeading  test
     Element Should Be Visible  listing-table

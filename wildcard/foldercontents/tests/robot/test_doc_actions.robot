@@ -30,10 +30,26 @@ Teardown Suite
     Click Delete Action
     Close all browsers
 
+Open Doc Menu
+    [Arguments]  ${doc-id}
+
+    Click Button  css=#folder-contents-item-${doc-id} button.dropdown-toggle
+    Doc Menu Should Be Visible  ${doc-id}
+
+Doc Menu Should Be Visible
+    [Arguments]  ${doc-id}
+
+    Element Should Be Visible  css=#folder-contents-item-${doc-id} ul.dropdown-menu
+
+Doc Menu Should Not Be Visible
+    [Arguments]  ${doc-id}
+
+    Element Should Not Be Visible  css=#folder-contents-item-${doc-id} ul.dropdown-menu
+
 Click Entry In Doc Menu
     [Arguments]  ${doc-id}  ${action-id}
 
-    Click Button  css=#folder-contents-item-${doc-id} button.dropdown-toggle
+    Open Doc Menu  ${doc-id}
     Click Link  css=#folder-contents-item-${doc-id} ul.dropdown-menu a.actionicon-object_buttons-${action-id}
 
 Verify Overlay Is Visible
@@ -74,6 +90,13 @@ Test Pasting
 
 
 *** Test Cases ***
+
+Test Popup Auto Closing
+    Go to  ${PLONE_URL}/test
+    Click Contents In Edit Bar
+    Open Doc Menu  doc-1
+    Open Doc Menu  doc-2
+    Doc Menu Should Not Be Visible  doc-1
 
 Test Renaming
     Go to  ${PLONE_URL}/test

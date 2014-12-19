@@ -212,7 +212,7 @@
               </td>
               <td>
                 <div class="btn-group">
-                  <button class="btn btn-mini dropdown-toggle" class="allowMultiSubmit"><i class="icon-cog"></i><span class="caret"></span></button>
+                  <button class="btn btn-mini dropdown-toggle" class="allowMultiSubmit" data-toggle="dropdown"><i class="icon-cog"></i><span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a class="move-top" href="#" i18n:translate="foldercontents_move_top">Move to top</a></li>
                     <li><a class="move-bottom" href="#" i18n:translate="foldercontents_move_bottom">Move to bottom</a></li>

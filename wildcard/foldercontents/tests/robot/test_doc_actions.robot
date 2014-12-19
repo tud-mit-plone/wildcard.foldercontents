@@ -36,6 +36,12 @@ Click Entry In Doc Menu
     Click Button  css=#folder-contents-item-${doc-id} button.dropdown-toggle
     Click Link  css=#folder-contents-item-${doc-id} ul.dropdown-menu a.actionicon-object_buttons-${action-id}
 
+Verify Overlay Is Visible
+    Wait until keyword succeeds  10  1  Page Should Contain Element  css=.pb-ajax > div
+    Element Should Be Visible  css=.pb-ajax > div
+
+Verify Overlay Is Gone
+    Wait until keyword succeeds  10  1  Page Should Not Contain Element  css=.pb-ajax > div
 
 Test Cutting
     Capture Page Screenshot
@@ -95,4 +101,11 @@ Test Deleting
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
     Click Entry In Doc Menu  doc-1  delete
-    # uncomplete, postponed until the overlays work again
+    Verify Overlay Is Visible
+    Click Button  xpath=//form[@id='delete_confirmation']//input[@type='submit' and @value='Delete']
+    Verify Overlay Is Gone
+    # check we're back
+    Element Should Contain  css=h1.documentFirstHeading  test
+    Element Should Be Visible  listing-table
+    # check doc-1 isn't listed anymore
+    Element Should Not Be Visible  folder-contents-item-doc-1

@@ -204,6 +204,18 @@ fc = {
                 last_checked = $(this);
             }
         });
+
+        $('#listing-table a.actionicon-object_buttons-delete').prepOverlay(
+            {
+                 subtype: 'ajax',
+                 filter: common_content_filter,
+                 formselector: '#delete_confirmation',
+                 cssclass: 'overlay-delete',
+                 noform: 'reload',
+                 closeselector: '[name="form.button.Cancel"]',
+                 width:'50%'
+             }
+        );
     }
 };
 

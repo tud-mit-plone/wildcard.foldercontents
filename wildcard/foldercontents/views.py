@@ -64,6 +64,10 @@ def _is_collection(context):
     return IATTopic.providedBy(context) or \
         ICollection.providedBy(context)
 
+class SortOptions(object):
+    def __init__(self, options, reversed):
+        self.options = options
+        self.reversed = reversed
 
 class NewTable(Table):
     render = ViewPageTemplateFile('table.pt')
@@ -144,6 +148,10 @@ class NewFolderContentsTable(FolderContentsTable):
 
 class NewFolderContentsView(FolderContentsView):
 
+    def __init__(self, *args, **kwargs):
+        super(NewFolderContentsView, self).__init__(*args, **kwargs)
+        self.sort_options = self._create_sort_options()
+
     @property
     def orderable(self):
         if _is_collection(self.context):
@@ -178,6 +186,25 @@ class NewFolderContentsView(FolderContentsView):
         layout = getMultiAdapter((context, self.request), name=u'plone_layout')
         return layout.renderBase()
 
+    def _create_sort_options(self):
+        static_sort = getattr(self.context, '__static_sort', {})
+        static_sort_criteria = static_sort.get('criterium', 'manual')
+        static_sort_reversed = static_sort.get('reversed', False)
+        def create_option(name, title):
+            return {
+                'name': name,
+                'title': title,
+                'active': name == static_sort_criteria
+            }
+        options = [
+            create_option('manual', _('foldercontents_manual_order', default=u'Manual')),
+            create_option('sortable_title', _('foldercontents_title_order', default=u'Title')),
+            create_option('id', _('foldercontents_id_order', default=u'ID')),
+            create_option('modified', _('foldercontents_modification_order', default=u'Modification Date')),
+            create_option('created', _('foldercontents_creation_order', default=u'Creation Date')),
+            create_option('effective', _('foldercontents_effective_order', default=u'Effective Date')),
+        ]
+        return SortOptions(options, static_sort_reversed)
 
 class Move(BrowserView):
 
@@ -210,8 +237,17 @@ class Sort(BrowserView):
                 self.request['REQUEST_METHOD'] != 'POST':
             raise Unauthorized
         sort_crit = self.request.form.get('on')
-        sort_reversed = self.request.form.get('reversed')
-        sort_folder(self.context, sort_crit, sort_reversed)
+        sort_reversed = bool(self.request.form.get('reversed'))
+        if sort_crit == 'manual':
+            if hasattr(self.context, '__static_sort'):
+                delattr(self.context, '__static_sort')
+        else:
+            sort_folder(self.context, sort_crit, sort_reversed)
+            setattr(self.context, '__static_sort', {
+                'criterium': sort_crit,
+                'reversed': sort_reversed,
+            })
+            static_sort = getattr(self.context, '__static_sort', {})
         self.request.response.redirect(
             '%s/folder_contents' % self.context.absolute_url())
 

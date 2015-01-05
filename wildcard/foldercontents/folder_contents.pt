@@ -188,13 +188,19 @@
             </p>
             <label i18n:translate="foldercontents_sorton">Sort on:</label>
             <select name="on">
-              <option value="sortable_title" i18n:translate="foldercontents_title_order">Title</option>
-              <option value="id" i18n:translate="foldercontents_id_order">ID</option>
-              <option value="modified" i18n:translate="foldercontents_modification_order">Modification Date</option>
-              <option value="created" i18n:translate="foldercontents_creation_order">Creation Date</option>
-              <option value="effective" i18n:translate="foldercontents_effective_order">Effective Date</option>
+              <option
+                  value="manual"
+                  tal:repeat="option view/sort_options/options"
+                  tal:attributes="value option/name;
+                                  selected option/active"
+                  tal:content="option/title">
+                Manual
+              </option>
             </select>
-            <input type="checkbox" name="reversed" />
+            <input
+                type="checkbox"
+                name="reversed"
+                tal:attributes="checked view/sort_options/reversed"/>
             <label i18n:translate="foldercontents_reversed_order" class="checkbox">Reversed</label>
             <input tal:replace="structure context/@@authenticator/authenticator" />
             <button type="submit" class="btn btn-warning" i18n:translate="foldercontents_sort_folder">Sort folder</button>

@@ -17,6 +17,8 @@ from plone.app.content.browser.tableview import Table
 from plone.folder.interfaces import IExplicitOrdering
 from urllib import urlencode
 from wildcard.foldercontents import wcfcMessageFactory as _
+from wildcard.foldercontents.utils import sort_folder
+from wildcard.foldercontents.utils import getOrdering
 from zope.browsermenu.interfaces import IBrowserMenu
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -177,16 +179,6 @@ class NewFolderContentsView(FolderContentsView):
         return layout.renderBase()
 
 
-def getOrdering(context):
-    if IPloneSiteRoot.providedBy(context):
-        return context
-    else:
-        ordering = context.getOrdering()
-        if not IExplicitOrdering.providedBy(ordering):
-            return None
-        return ordering
-
-
 class Move(BrowserView):
 
     def __call__(self):
@@ -217,16 +209,9 @@ class Sort(BrowserView):
         if not authenticator.verify() or \
                 self.request['REQUEST_METHOD'] != 'POST':
             raise Unauthorized
-        ordering = getOrdering(self.context)
-        catalog = getToolByName(self.context, 'portal_catalog')
-        brains = catalog(path={
-            'query': '/'.join(self.context.getPhysicalPath()),
-            'depth': 1
-        }, sort_on=self.request.form.get('on'))
-        if self.request.form.get('reversed'):
-            brains = [b for b in reversed(brains)]
-        for idx, brain in enumerate(brains):
-            ordering.moveObjectToPosition(brain.id, idx)
+        sort_crit = self.request.form.get('on')
+        sort_reversed = self.request.form.get('reversed')
+        sort_folder(self.context, sort_crit, sort_reversed)
         self.request.response.redirect(
             '%s/folder_contents' % self.context.absolute_url())
 

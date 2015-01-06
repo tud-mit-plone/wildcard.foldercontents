@@ -184,26 +184,30 @@
           <form class="well form-inline" method="POST"
                 tal:attributes="action string:${context/absolute_url}/@@wcfcsort">
             <p i18n:translate="sort-container-help">
-              This operation re-arranges the order of the objects in this folder permanently.
+              Display the folder contents always in the selected order. This operation affects both existing and new content.
             </p>
-            <label i18n:translate="foldercontents_sorton">Sort on:</label>
-            <select name="on">
-              <option
-                  value="manual"
-                  tal:repeat="option view/sort_options/options"
-                  tal:attributes="value option/name;
-                                  selected option/active"
-                  tal:content="option/title">
-                Manual
-              </option>
-            </select>
-            <input
-                type="checkbox"
-                name="reversed"
-                tal:attributes="checked view/sort_options/reversed"/>
-            <label i18n:translate="foldercontents_reversed_order" class="checkbox">Reversed</label>
+            <p>
+              <label i18n:translate="foldercontents_sorton">Sort on:</label>
+              <select name="on">
+                <option
+                    value="manual"
+                    tal:repeat="option view/sort_options/options"
+                    tal:attributes="value option/name;
+                                    selected option/active"
+                    tal:content="option/title">
+                  Manual
+                </option>
+              </select>
+            </p>
+            <p>
+              <input
+                  type="checkbox"
+                  name="reversed"
+                  tal:attributes="checked view/sort_options/reversed"/>
+              <label i18n:translate="foldercontents_reversed_order" class="checkbox">Reversed</label>
+            </p>
             <input tal:replace="structure context/@@authenticator/authenticator" />
-            <button type="submit" class="btn btn-warning" i18n:translate="foldercontents_sort_folder">Sort folder</button>
+            <button type="submit" class="btn btn-warning" i18n:translate="foldercontents_set_folder_order">Set Folder Order</button>
           </form>
         </div>
       </div>

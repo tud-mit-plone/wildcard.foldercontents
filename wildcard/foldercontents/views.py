@@ -178,22 +178,15 @@ class NewFolderContentsView(FolderContentsView):
         super(NewFolderContentsView, self).__init__(*args, **kwargs)
         self.sort_options = self._create_sort_options()
 
-    @property
-    def orderable(self):
-        if _is_collection(self.context):
-            return False
-        if IPloneSiteRoot.providedBy(self.context):
-            return True
-        if not hasattr(self.context, 'getOrdering'):
-            return False
-        ordering = self.context.getOrdering()
-        return IExplicitOrdering.providedBy(ordering)
-
     def __call__(self):
-        if not self.orderable:
-            messages = IStatusMessage(self.request)
-            messages.add(u"This type of folder does not support ordering",
-                         type=u"info")
+        if self.sort_options is not None:
+            for option in self.sort_options.options:
+                if option['active'] and option['name'] != 'manual':
+                    messages = IStatusMessage(self.request)
+                    msg = _(u"This folder is sorted by: $ordering. Manual reordering is locked.", mapping={
+                        u'ordering': option['title']
+                    })
+                    messages.add(msg, type='info')
         return super(NewFolderContentsView, self).__call__()
 
     def contents_table(self):

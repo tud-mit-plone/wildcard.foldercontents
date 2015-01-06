@@ -1,6 +1,8 @@
+from persistent.mapping import PersistentMapping
 from plone.folder.interfaces import IOrderableFolder
 from plone.folder.interfaces import IOrdering
 from Products.CMFCore.utils import getToolByName
+from zope.annotation.interfaces import IAnnotations
 from zope.interface import implements
 from zope.component import adapts
 from wildcard.foldercontents.interfaces import ICatalogOrdering
@@ -10,6 +12,8 @@ class CatalogOrdering(object):
 
     implements(ICatalogOrdering)
     adapts(IOrderableFolder)
+
+    SETTINGS_KEY = 'wildcard.foldercontents.CatalogOrderingSettings'
 
     def __init__(self, context):
         self.context = context
@@ -47,5 +51,10 @@ class CatalogOrdering(object):
         return brains
 
     def settings(self):
-        """returns the order settings"""
-        return getattr(self.context, '__static_sort', {})
+        """returns the ordering settings stored in an annotation"""
+        annotations = IAnnotations(self.context)
+        settings = annotations.get(self.SETTINGS_KEY, None)
+        if settings is None:
+            settings = annotations[self.SETTINGS_KEY] = PersistentMapping()
+        return settings
+

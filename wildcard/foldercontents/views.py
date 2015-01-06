@@ -213,14 +213,13 @@ class NewFolderContentsView(FolderContentsView):
         return layout.renderBase()
 
     def _create_sort_options(self):
-        static_sort = getattr(self.context, '__static_sort', {})
         if not IOrderableFolder.providedBy(self.context):
             return None
         ordering = self.context.getOrdering()
         if ICatalogOrdering.providedBy(ordering):
             settings = ordering.settings()
-            static_sort_criteria = static_sort.get('criterium', '')
-            static_sort_reversed = static_sort.get('reversed', False)
+            static_sort_criteria = settings.get('criterium', '')
+            static_sort_reversed = settings.get('reversed', False)
         else:
             static_sort_criteria = 'manual'
             static_sort_reversed = False

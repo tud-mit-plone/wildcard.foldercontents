@@ -69,6 +69,14 @@ def _is_collection(context):
 def _supports_ordering_policies(context):
     return IOrderableFolder.providedBy(context)
 
+def _supports_explicit_ordering(context):
+    if IPloneSiteRoot.providedBy(context):
+        return True
+    if not IOrderableFolder.providedBy(context):
+        return False
+    ordering = context.getOrdering()
+    return IExplicitOrdering.providedBy(ordering)
+
 class SortOptions(object):
     def __init__(self, options, reversed):
         self.options = options
@@ -131,6 +139,7 @@ class NewFolderContentsTable(FolderContentsTable):
         self.pagesize = int(self.request.get('pagesize', 20))
         self.items = self.folderitems()
         self._add_actions(self.items)
+        self._set_item_table_row_classes(self.items)
         url = context.absolute_url()
         view_url = '%s/folder_contents?sort_on=%s&sort_order=%s' % (
             url, sort, order)
@@ -140,6 +149,9 @@ class NewFolderContentsTable(FolderContentsTable):
         self.table.is_collection = _is_collection(self.context)
         self.table.supports_ordering_policies = _supports_ordering_policies(self.context)
 
+    @property
+    def orderable(self):
+        return _supports_explicit_ordering(self.context)
     @property
     def show_sort_column(self):
         sort = _normalize_form_val(self.request.form, 'sort_on')
@@ -151,6 +163,14 @@ class NewFolderContentsTable(FolderContentsTable):
         for item in items:
             obj = item['brain'].getObject()
             item['actions'] = menu.getMenuItems(obj, self.request)
+
+    def _set_item_table_row_classes(self, items):
+        if _supports_explicit_ordering(self.context):
+            # in this case, the classes assigned in FolderContentsTable are fine
+            return
+        # else skip we draggable class
+        for index, item in enumerate(items):
+            item['table_row_class'] = 'even' if index % 2 == 0 else 'odd'
 
 class NewFolderContentsView(FolderContentsView):
 

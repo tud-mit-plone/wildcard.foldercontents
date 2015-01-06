@@ -123,7 +123,8 @@
         </tr>
         <tr>
           <th class="nosort column"
-              id="foldercontents-order-column">&nbsp;</th>
+              id="foldercontents-order-column"
+              tal:condition="view/show_sort_column">&nbsp;</th>
           <th class="nosort"
               id="foldercontents-select-column"
               tal:condition="view/show_select_column">&nbsp;</th>
@@ -154,8 +155,8 @@
                             title_or_id python:title or id;"
                 tal:attributes="class item/table_row_class;
                                 id string:folder-contents-item-${id};">
-              <td>
-                <span tal:condition="view/show_sort_column" class="draggable"
+              <td tal:condition="view/show_sort_column">
+                <span class="draggable"
                       style="cursor: ns-resize; ">
                   ⣿
                 </span>
@@ -214,9 +215,15 @@
                 <div class="btn-group">
                   <button class="btn btn-mini dropdown-toggle" class="allowMultiSubmit" data-toggle="dropdown"><i class="icon-cog"></i><span class="caret"></span></button>
                   <ul class="dropdown-menu">
-                    <li><a class="move-top" href="#" i18n:translate="foldercontents_move_top">Move to top</a></li>
-                    <li><a class="move-bottom" href="#" i18n:translate="foldercontents_move_bottom">Move to bottom</a></li>
-                    <li class="divider" tal:condition="item/actions"></li>
+                    <tal:order-controls
+                        tal:condition="view/show_sort_column">
+                      <li><a class="move-top" href="#" i18n:translate="foldercontents_move_top">Move to top</a></li>
+                      <li><a class="move-bottom" href="#" i18n:translate="foldercontents_move_bottom">Move to bottom</a></li>
+                    </tal:order-controls>
+                    <li
+                        class="divider"
+                        tal:condition="python:item['actions'] and view.show_sort_column">
+                    </li>
                     <tal:doc-actions tal:repeat="menuItem item/actions">
                       <li>
                         <a tal:attributes="href menuItem/action;

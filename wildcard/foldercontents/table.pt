@@ -37,7 +37,7 @@
         </div>
       </tal:buttons>
       <a tal:condition="not: is_collection" class="btn btn-success" id="upload-files" i18n:translate="foldercontents_uploadfiles">Upload Files</a>
-      <a tal:condition="not: is_collection" class="btn btn-danger" id="sort-folder" i18n:translate="foldercontents_sortby">Sort folder by...</a>
+      <a tal:condition="view/supports_ordering_policies" class="btn btn-danger" id="sort-folder" i18n:translate="foldercontents_sortby">Sort folder by...</a>
     </div>
 
     <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>

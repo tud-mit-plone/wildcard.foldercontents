@@ -1,5 +1,6 @@
 from .interfaces import IATCTFileFactory
 from .interfaces import IDXFileFactory
+from .interfaces import ICatalogOrdering
 from .jstemplates import NEW_FOLDER_CONTENTS_VIEW_JS_TEMPLATES
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
@@ -15,6 +16,7 @@ from plone.app.content.browser.foldercontents import FolderContentsView
 from plone.app.content.browser.folderfactories import _allowedTypes
 from plone.app.content.browser.tableview import Table
 from plone.folder.interfaces import IExplicitOrdering
+from plone.folder.interfaces import IOrderableFolder
 from urllib import urlencode
 from wildcard.foldercontents import wcfcMessageFactory as _
 from wildcard.foldercontents.utils import sort_folder
@@ -63,6 +65,9 @@ def _normalize_form_val(form, key, default=''):
 def _is_collection(context):
     return IATTopic.providedBy(context) or \
         ICollection.providedBy(context)
+
+def _supports_ordering_policies(context):
+    return IOrderableFolder.providedBy(context)
 
 class SortOptions(object):
     def __init__(self, options, reversed):
@@ -133,6 +138,7 @@ class NewFolderContentsTable(FolderContentsTable):
                               show_sort_column=self.show_sort_column,
                               buttons=self.buttons)
         self.table.is_collection = _is_collection(self.context)
+        self.table.supports_ordering_policies = _supports_ordering_policies(self.context)
 
     @property
     def show_sort_column(self):
@@ -188,8 +194,16 @@ class NewFolderContentsView(FolderContentsView):
 
     def _create_sort_options(self):
         static_sort = getattr(self.context, '__static_sort', {})
-        static_sort_criteria = static_sort.get('criterium', 'manual')
-        static_sort_reversed = static_sort.get('reversed', False)
+        if not IOrderableFolder.providedBy(self.context):
+            return None
+        ordering = self.context.getOrdering()
+        if ICatalogOrdering.providedBy(ordering):
+            settings = ordering.settings()
+            static_sort_criteria = static_sort.get('criterium', '')
+            static_sort_reversed = static_sort.get('reversed', False)
+        else:
+            static_sort_criteria = 'manual'
+            static_sort_reversed = False
         def create_option(name, title):
             return {
                 'name': name,
@@ -236,18 +250,22 @@ class Sort(BrowserView):
         if not authenticator.verify() or \
                 self.request['REQUEST_METHOD'] != 'POST':
             raise Unauthorized
+        # The site root doesn't support sort policicies
+        if not IOrderableFolder.providedBy(self.context):
+            messages = IStatusMessage(self.request)
+            messages.add(_(u"This folder doesn't support reordering"), type='error')
+            self.request.response.redirect(
+                '%s/folder_contents' % self.context.absolute_url())
+            return ''
         sort_crit = self.request.form.get('on')
         sort_reversed = bool(self.request.form.get('reversed'))
         if sort_crit == 'manual':
-            if hasattr(self.context, '__static_sort'):
-                delattr(self.context, '__static_sort')
+            self.context.setOrdering('')
         else:
-            sort_folder(self.context, sort_crit, sort_reversed)
-            setattr(self.context, '__static_sort', {
-                'criterium': sort_crit,
-                'reversed': sort_reversed,
-            })
-            static_sort = getattr(self.context, '__static_sort', {})
+            self.context.setOrdering('catalog')
+            settings = self.context.getOrdering().settings()
+            settings['criterium'] = sort_crit
+            settings['reversed'] = sort_reversed
         self.request.response.redirect(
             '%s/folder_contents' % self.context.absolute_url())
 

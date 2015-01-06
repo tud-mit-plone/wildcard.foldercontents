@@ -56,5 +56,6 @@
 
   <adapter factory=".factories.ATCTFileFactory" />
   <adapter factory=".factories.DXFileFactory" />
+  <adapter factory=".ordering.CatalogOrdering" name="catalog" />
 
 </configure>

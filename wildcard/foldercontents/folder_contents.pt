@@ -180,7 +180,7 @@
           <!-- The table listing the files available for upload/download -->
           <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
         </form>
-        <div id="sort-container" style="display:none">
+        <div id="sort-container" style="display:none" tal:condition="view/sort_options">
           <form class="well form-inline" method="POST"
                 tal:attributes="action string:${context/absolute_url}/@@wcfcsort">
             <p i18n:translate="sort-container-help">

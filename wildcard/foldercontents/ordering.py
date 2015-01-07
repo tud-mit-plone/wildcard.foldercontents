@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implements
 from zope.component import adapts
+from zope.component import getAdapter
 from wildcard.foldercontents.interfaces import ICatalogOrdering
 
 class CatalogOrdering(object):
@@ -19,12 +20,19 @@ class CatalogOrdering(object):
         self.context = context
 
     def notifyAdded(self, id):
-        """not needed here"""
-        pass
+        """tell the default order about the new ID
+
+        Here we don't need it, since we rely on the automatically
+        updated catolog. But the default ordering needs to be told
+        or the listing is out of date when the user
+        uses it again for the folder.
+        """
+        self._get_default_ordering().notifyAdded(id)
+
 
     def notifyRemoved(self, id):
-        """not needed here"""
-        pass
+        """see notifyAdded"""
+        self._get_default_ordering().notifyRemoved(id)
 
     def getObjectPosition(self, id):
         """ Get the position of the given id """
@@ -57,4 +65,6 @@ class CatalogOrdering(object):
         if settings is None:
             settings = annotations[self.SETTINGS_KEY] = PersistentMapping()
         return settings
+    def _get_default_ordering(self):
+        return getAdapter(self.context, IOrdering, name='')
 

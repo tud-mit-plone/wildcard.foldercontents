@@ -28,7 +28,7 @@ class CatalogOrdering(object):
 
     def getObjectPosition(self, id):
         """ Get the position of the given id """
-        return self.idsInOrder.index(id)
+        return self.idsInOrder().index(id)
 
     def idsInOrder(self):
         """ Return all object ids, in the correct order """

@@ -59,7 +59,7 @@ fc = {
     },
     setUploadFormVisibility: function(visible) {
         if (visible) {
-            $('#fileupload').fadeIn();
+            $('#fileupload').fadeIn()[0].scrollIntoView();
             $('#upload-files').addClass('active');
             fc.setSortContainerVisibility(false);
         }
@@ -70,7 +70,7 @@ fc = {
     },
     setSortContainerVisibility: function(visible) {
         if (visible) {
-            $('#sort-container').fadeIn();
+            $('#sort-container').fadeIn()[0].scrollIntoView();
             $('#sort-folder').addClass('active');
             fc.setUploadFormVisibility(false);
         }

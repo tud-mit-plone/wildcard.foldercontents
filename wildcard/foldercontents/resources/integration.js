@@ -81,7 +81,10 @@ fc = {
     },
     initialize: function() {
         fc.initializeTable();
+    },
 
+    initializeTable: function()
+    {
         $('#upload-files').click(function() {
             fc.setUploadFormVisibility(!$('#upload-files').hasClass('active'));
             return false;
@@ -90,10 +93,6 @@ fc = {
             fc.setSortContainerVisibility(!$('#sort-folder').hasClass('active'));
             return false;
         });
-    },
-
-    initializeTable: function()
-    {
         var start = null;
         if (fc.sortable()) {
             $('#listing-table tbody').sortable({

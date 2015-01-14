@@ -19,8 +19,6 @@ from plone.folder.interfaces import IExplicitOrdering
 from plone.folder.interfaces import IOrderableFolder
 from urllib import urlencode
 from wildcard.foldercontents import wcfcMessageFactory as _
-from wildcard.foldercontents.utils import sort_folder
-from wildcard.foldercontents.utils import getOrdering
 from zope.browsermenu.interfaces import IBrowserMenu
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -50,6 +48,16 @@ else:
 
 
 logger = logging.getLogger("wildcard.foldercontents")
+
+
+def getOrdering(context):
+    if IPloneSiteRoot.providedBy(context):
+        return context
+    else:
+        ordering = context.getOrdering()
+        if not IExplicitOrdering.providedBy(ordering):
+            return None
+        return ordering
 
 
 def _normalize_form_val(form, key, default=''):

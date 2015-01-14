@@ -22,6 +22,9 @@
       <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
       <style>
+      #content table#listing-table {
+        border-collapse: separate;
+      }
       .right-caret {
         border-bottom: 4px solid transparent;
         border-top: 4px solid transparent;

@@ -225,10 +225,12 @@ class NewFolderContentsView(FolderContentsView):
         options = [
             create_option('manual', _('foldercontents_manual_order', default=u'Manual')),
             create_option('sortable_title', _('foldercontents_title_order', default=u'Title')),
-            create_option('id', _('foldercontents_id_order', default=u'ID')),
+            create_option('id', _('foldercontents_id_order', default=u'Short Name')),
             create_option('modified', _('foldercontents_modification_order', default=u'Modification Date')),
             create_option('created', _('foldercontents_creation_order', default=u'Creation Date')),
-            create_option('effective', _('foldercontents_effective_order', default=u'Effective Date')),
+            create_option('effective', _('foldercontents_effective_order', default=u'Publishing Date')),
+            create_option('expires', _('foldercontents_expiry_order', default=u'Expiration Date')),
+            create_option('portal_type', _('foldercontents_type_order', default=u'Type')),
         ]
         return SortOptions(options, static_sort_reversed)
 

@@ -36,27 +36,27 @@ Inherits from `plone.app.browser.foldercontents.FolderContentsView`. Provides th
 
 #### `NewFolderContentsTable`
 
-Inherits from `plone.app.browser.foldercontents.FolderContentsTable`. It collects the data for the folder listing. For this it reuses the methods `folderitems()` and `buttons()` from `FolderContentsTable`. The view has no dedicted template. Instead it contains in the attribute `table` an instance of `plone.app.content.browser.tableview.Table`, a view for displaying a sortable  HTML table. Here, an instance of `NewTable` is used.                          
-
 * Template: -
+
+Inherits from `plone.app.browser.foldercontents.FolderContentsTable`. It collects the data for the folder listing. For this it reuses the methods `folderitems()` and `buttons()` from `FolderContentsTable`. The view has no dedicted template. Instead it contains in the attribute `table` an instance of `plone.app.content.browser.tableview.Table`, a view for displaying a sortable  HTML table. Here, an instance of `NewTable` is used.                          
 
 #### `NewTable`
 
-Inherits from `plone.app.browser.tableview.Table`. For the most part, it swaps out the template. It contains nearly the complete markup for the folder view consisting of the toolbar for the folder actions and the listing table. For the batching support it pulls the helper template `batching.pt`.
-
 * Template: table.pt
+
+Inherits from `plone.app.browser.tableview.Table`. For the most part, it swaps out the template. It contains nearly the complete markup for the folder view consisting of the toolbar for the folder actions and the listing table. For the batching support it pulls the helper template `batching.pt`.
 
 #### `Move`
 
-Handler for the XH requests for the manual folder reordering.
-
 * Template: -
+
+Handler for the XH requests for the manual folder reordering.
 
 #### `Sort`
 
-Handler for the static folder sorting.
-
 * Template: -
+
+Handler for the static folder sorting.
 
 #### `JUpload`
 

@@ -46,7 +46,7 @@ class CatalogOrdering(object):
         """returns brains for all content items in the folder"""
         settings = self.settings()
         catalog = getToolByName(self.context, 'portal_catalog')
-        brains = catalog.unrestrictedSearchResults(
+        brains = catalog(
             path={
                 'query': '/'.join(self.context.getPhysicalPath()),
                 'depth': 1,

@@ -28,32 +28,41 @@ All views are implemented in `wildcard.foldercontents.views`. The actual folder 
 
  The templates for the views are stored in the same folder.
 
-| *View*                  | *Template*          | *Description*                                                                   |
-|-------------------------|---------------------|---------------------------------------------------------------------------------|
-| NewFolderContentsView   | folder_contents.pt  | Inherits from `plone.app.browser.foldercontents.FolderContentsView`. Provides   |
-|                         |                     | the environment for the folder view. For that, the necessary CSS and JavaScript |
-|                         |                     | resources are added to the relevant slots of the master template. The actual    |
-|                         |                     | folder view is put into the slot `content_core`. For this the view uses an      |
-|                         |                     | instance of `NewFolderContentsTable`. After that, the markup for the forms for  |
-|                         |                     | the upload and sort function follows.                                           |
-|-------------------------|---------------------|---------------------------------------------------------------------------------|
-| NewFolderContentsTable  | -                   | Inherits from `plone.app.browser.foldercontents.FolderContentsTable`. It        |
-|                         |                     | collects the data for the folder listing. For this it reuses the methods        |
-|                         |                     | `folderitems()` and `buttons()` from `FolderContentsTable`. The view has no     |
-|                         |                     | dedicted template. Instead it contains in the attribute `table` an instance of  |
-|                         |                     | `plone.app.content.browser.tableview.Table, a view for displaying a sortable    |
-|                         |                     | HTML table. Here, an instance of `NewTable` is used.                            |
-|-------------------------|---------------------|---------------------------------------------------------------------------------|
-| NewTable                | table.pt            | Inherits from `plone.app.browser.tableview.Table`. For the most part, it swaps  |
-|                         |                     | out the template. It contains nearly the complete markup for the folder view    |
-|                         |                     | consisting of the toolbar for the folder actions and the listing table. For the |
-|                         |                     | batching support it pulls the helper template `batching.pt`.
-|-------------------------|---------------------|---------------------------------------------------------------------------------|
-| Move                    | -                   | Handler for the XH requests for the manual folder reordering.                   |
-|-------------------------|---------------------|---------------------------------------------------------------------------------|
-| Sort                    | -                   | Handler for the static folder sorting.                                          |
-|-------------------------|---------------------|---------------------------------------------------------------------------------|
-| JUpload                 | -                   | Backend for jQuery File Upload                                                  |
+#### `NewFolderContentsView`
+
+* Template: folder_contents.pt
+
+Inherits from `plone.app.browser.foldercontents.FolderContentsView`. Provides the environment for the folder view. For that, the necessary CSS and JavaScript resources are added to the relevant slots of the master template. The actual folder view is put into the slot `content_core`. For this the view uses an instance of `NewFolderContentsTable`. After that, the markup for the forms for the upload and sort function follows.                                         
+
+#### `NewFolderContentsTable`
+
+Inherits from `plone.app.browser.foldercontents.FolderContentsTable`. It collects the data for the folder listing. For this it reuses the methods `folderitems()` and `buttons()` from `FolderContentsTable`. The view has no dedicted template. Instead it contains in the attribute `table` an instance of `plone.app.content.browser.tableview.Table`, a view for displaying a sortable  HTML table. Here, an instance of `NewTable` is used.                          
+
+* Template: -
+
+#### `NewTable`
+
+Inherits from `plone.app.browser.tableview.Table`. For the most part, it swaps out the template. It contains nearly the complete markup for the folder view consisting of the toolbar for the folder actions and the listing table. For the batching support it pulls the helper template `batching.pt`.
+
+* Template: table.pt
+
+#### `Move`
+
+Handler for the XH requests for the manual folder reordering.
+
+* Template: -
+
+#### `Sort`
+
+Handler for the static folder sorting.
+
+* Template: -
+
+#### `JUpload`
+
+* Template: -
+
+Backend for jQuery File Upload
 
 ### Resources
 

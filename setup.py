@@ -27,7 +27,6 @@ setup(
     install_requires=[
         'setuptools',
         'jarn.jsi18n',
-        'tud.jslib.jquery_migrate',
     ],
     extras_require={
         'test': ['plone.app.robotframework']

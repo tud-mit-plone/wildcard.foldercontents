@@ -31,14 +31,6 @@ Teardown
     Click Delete Action
     Close all browsers
 
-Click Entry In Sort Menu
-    [Arguments]  ${name}
-
-    Click Button  css=#foldercontents-display-sortorder>button
-    Element Should Contain  css=#foldercontents-display-sortorder>ul  ${name}
-    Click Link  link=${name}
-    Wait For Ajax Reload
-
 Set Folder Order
     [Arguments]  ${criterium}  ${reverse}=${false}
     Click Link  sort-folder
@@ -56,32 +48,32 @@ Check Natural Sorting
     Table Row Should Contain  listing-table  1  doc 3
     Table Row Should Contain  listing-table  2  doc 1
     Table Row Should Contain  listing-table  3  doc 2
-    Click Entry In Sort Menu  Descending order
+    Click Entry In Display Sort Menu  Descending order
     Table Row Should Contain  listing-table  1  doc 2
     Table Row Should Contain  listing-table  2  doc 1
     Table Row Should Contain  listing-table  3  doc 3
-    Click Entry In Sort Menu  Ascending order
+    Click Entry In Display Sort Menu  Ascending order
 
 Check Display Sorting
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
-    Click Entry In Sort Menu  Title
+    Click Entry In Display Sort Menu  Title
     Capture Page Screenshot
     Table Row Should Contain  listing-table  1  doc 1
     Table Row Should Contain  listing-table  2  doc 2
     Table Row Should Contain  listing-table  3  doc 3
     # Check manual reordering is deactivated
     Element Should Not Be Visible  foldercontents-order-column
-    Click Entry In Sort Menu  Descending order
+    Click Entry In Display Sort Menu  Descending order
     Table Row Should Contain  listing-table  1  doc 3
     Table Row Should Contain  listing-table  2  doc 2
     Table Row Should Contain  listing-table  3  doc 1
-    Click Entry In Sort Menu  Ascending order
+    Click Entry In Display Sort Menu  Ascending order
 
 Check Manual Reordering
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
-    Click Entry In Sort Menu  Folder Order
+    Click Entry In Display Sort Menu  Folder Order
     Drag And Drop  folder-contents-item-doc-2  folder-contents-item-doc-3
     Table Row Should Contain  listing-table  1  doc 2
     Table Row Should Contain  listing-table  2  doc 3

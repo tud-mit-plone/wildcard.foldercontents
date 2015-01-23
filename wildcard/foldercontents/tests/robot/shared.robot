@@ -36,3 +36,11 @@ Verify Overlay Is Gone
 
 Wait For Ajax Reload
     Wait until keyword succeeds  10  1  Element Should Not Be Visible  kss-spinner
+
+Click Entry In Display Sort Menu
+    [Arguments]  ${name}
+
+    Click Button  css=#foldercontents-display-sortorder>button
+    Element Should Contain  css=#foldercontents-display-sortorder>ul  ${name}
+    Click Link  link=${name}
+    Wait For Ajax Reload

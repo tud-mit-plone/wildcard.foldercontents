@@ -7,7 +7,7 @@
   <span class="previous"
         tal:condition="batch/has_previous">
     <a href=""
-       tal:attributes="href string:${view/url}&amp;pagenumber=${batch/previouspage}">
+       tal:attributes="href python:view.pagenumber_url(batch.previouspage)">
       &laquo;
       <span i18n:translate="batch_previous_x_items" tal:omit-tag="">
         Previous
@@ -20,7 +20,7 @@
   <span class="next"
         tal:condition="batch/has_next">
     <a href=""
-       tal:attributes="href string:${view/url}&amp;pagenumber=${batch/nextpage}">
+       tal:attributes="href python:view.pagenumber_url(batch.nextpage)">
       <span i18n:translate="batch_next_x_items" tal:omit-tag="">
         Next
         <span i18n:name="number" tal:omit-tag="" tal:content="batch/next_item_count">n</span>
@@ -33,7 +33,7 @@
   <!-- Link to first -->
   <span tal:condition="batch/show_link_to_first">
     <a href=""
-       tal:attributes="href string:${view/url}&amp;pagenumber=1">1</a>
+       tal:attributes="href python:view.pagenumber_url(1)">1</a>
     <span tal:condition="batch/second_page_not_in_navlist"
           tal:omit-tag="">
       ...
@@ -44,7 +44,7 @@
   <span tal:repeat="pagenumber batch/previous_pages"
         tal:omit-tag="" >
     <a href="" tal:content="pagenumber"
-       tal:attributes="href string:${view/url}&amp;pagenumber=$pagenumber"/>
+       tal:attributes="href python:view.pagenumber_url(pagenumber)"/>
   </span>
 
   <!-- Current page -->
@@ -57,7 +57,7 @@
   <span tal:repeat="pagenumber batch/next_pages"
         tal:omit-tag="" >
     <a href="" tal:content="pagenumber"
-       tal:attributes="href string:${view/url}&amp;pagenumber=$pagenumber"/>
+       tal:attributes="href python:view.pagenumber_url(pagenumber)"/>
   </span>
 
   <!-- Link to last -->
@@ -67,7 +67,8 @@
       ...
     </span>
     <a href=""
-       tal:attributes="href string:${view/url}&amp;pagenumber=${batch/lastpage}"
+       tal:attributes="href python:view.pagenumber_url(batch.lastpage)">
+    <span tal:condition="batch/second_page_not_in_navlist"
        tal:content="batch/lastpage">3457</a>
   </span>
 </div>

@@ -131,6 +131,9 @@ class NewTable(Table):
             base += '&show_all=true'
         return base
 
+    def pagenumber_url(self, pagenumber):
+        return self.view_url + '&pagenumber=%s' % (pagenumber)
+
 
 class NewFolderContentsTable(FolderContentsTable):
 

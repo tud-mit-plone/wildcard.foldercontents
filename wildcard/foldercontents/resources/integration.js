@@ -51,7 +51,7 @@ fc = {
         $.ajax({
             url: last_folder_url,
             success: function(data) {
-                $('#content-core').replaceWith($(data).find('#content-core'));
+                $('#content-core').replaceWith($($.parseHTML(data)).find('#content-core'));
                 fc.hideLoading();
                 fc.initialize();
             }
@@ -175,7 +175,7 @@ fc = {
                     url: last_folder_url,
                     success: function(data) {
                         $('#' + container_id).replaceWith(
-                            $(data).find('#' + container_id));
+                            $($.parseHTML(data)).find('#' + container_id));
                         fc.hideLoading();
                         fc.initializeTable();
                     }

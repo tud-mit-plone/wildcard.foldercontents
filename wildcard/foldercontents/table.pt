@@ -111,10 +111,10 @@
                     <tal:select_order i18n:domain="cmfeditions" i18n:translate="label_file_type">File type</tal:select_order>
                 </a></li>
                 <li class="divider"></li>
-                <li tal:condition="python: 'sort_order' in request.form">
+                <li tal:condition="python: request.form.get('sort_order', '')">
                   <a tal:attributes="href view/ascending_url" i18n:translate="foldercontents_ascending_order">Ascending order</a>
                 </li>
-                <li tal:condition="python: 'sort_order' not in request.form">
+                <li tal:condition="python: not request.form.get('sort_order', '')">
                   <a tal:attributes="href view/descending_url" i18n:translate="foldercontents_descending_order">Descending order</a>
                 </li>
               </ul>

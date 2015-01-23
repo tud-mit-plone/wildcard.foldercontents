@@ -37,6 +37,7 @@ Click Entry In Sort Menu
     Click Button  css=#foldercontents-display-sortorder>button
     Element Should Contain  css=#foldercontents-display-sortorder>ul  ${name}
     Click Link  link=${name}
+    Wait For Ajax Reload
 
 Set Folder Order
     [Arguments]  ${criterium}  ${reverse}=${false}

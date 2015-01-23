@@ -33,3 +33,6 @@ Verify Overlay Is Visible
 
 Verify Overlay Is Gone
     Wait until keyword succeeds  10  1  Page Should Not Contain Element  css=.pb-ajax > div
+
+Wait For Ajax Reload
+    Wait until keyword succeeds  10  1  Element Should Not Be Visible  kss-spinner

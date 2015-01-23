@@ -167,7 +167,7 @@ fc = {
         });
 
         // ajaxify some links
-        $('#content-core').delegate('#foldercontents-selectall,#foldercontents-show-batched,.listingBar a,#foldercontents-clearselection,#foldercontents-show-all',
+        $('#content-core').delegate('#foldercontents-selectall,#foldercontents-show-batched,.listingBar a,#foldercontents-clearselection,#foldercontents-show-all,#foldercontents-display-sortorder a',
             'click', function() {
                 fc.showLoading();
                 last_folder_url = $(this).attr('href');

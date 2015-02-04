@@ -67,8 +67,7 @@
       ...
     </span>
     <a href=""
-       tal:attributes="href python:view.pagenumber_url(batch.lastpage)">
-    <span tal:condition="batch/second_page_not_in_navlist"
+       tal:attributes="href python:view.pagenumber_url(batch.lastpage)"
        tal:content="batch/lastpage">3457</a>
   </span>
 </div>

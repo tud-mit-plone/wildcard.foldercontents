@@ -103,7 +103,7 @@
                 <li><a href="#" tal:attributes="href string:${baseurl}effective">
                     <b tal:condition="python: sort_on == 'effective'"
                        class="right-caret"></b>
-                    <tal:select_order i18n:translate="foldercontents_effective_order">Effective Date</tal:select_order>
+                    <tal:select_order i18n:translate="foldercontents_effective_order">Publishing Date</tal:select_order>
                 </a></li>
                 <li><a href="#" tal:attributes="href string:${baseurl}Type">
                     <b tal:condition="python: sort_on == 'Type'"

@@ -30,6 +30,6 @@ class WildcardFoldercontentsLayer(PloneSandboxLayer):
 WILDCARD_FOLDERCONTENTS_FIXTURE = WildcardFoldercontentsLayer()
 
 WILDCARD_FOLDERCONTENTS_ROBOT_TESTING = FunctionalTesting(
-    bases=(WILDCARD_FOLDERCONTENTS_FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE,
-          z2.ZSERVER_FIXTURE),
+    bases=(AUTOLOGIN_LIBRARY_FIXTURE,
+          z2.ZSERVER_FIXTURE, WILDCARD_FOLDERCONTENTS_FIXTURE, ),
     name="WildcardFoldercontents:Robot")

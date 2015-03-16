@@ -35,6 +35,7 @@ Verify Overlay Is Gone
     Wait until keyword succeeds  10  1  Page Should Not Contain Element  css=.pb-ajax > div
 
 Wait For Ajax Reload
+    Sleep  1s  Wait For Ajax Request To Start
     Wait until keyword succeeds  10  1  Element Should Not Be Visible  kss-spinner
 
 Click Entry In Display Sort Menu

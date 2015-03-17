@@ -36,7 +36,7 @@ Verify Overlay Is Gone
 
 Wait For Ajax Reload
     Sleep  1s
-    Wait until keyword succeeds  10  1  Element Should Not Be Visible  ajax-spinner
+    Wait until keyword succeeds  120  1  Element Should Not Be Visible  ajax-spinner
 
 Click Entry In Display Sort Menu
     [Arguments]  ${name}

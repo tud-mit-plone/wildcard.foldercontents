@@ -27,10 +27,10 @@ class WildcardFoldercontentsLayer(PloneSandboxLayer):
         self.applyProfile(portal, 'wildcard.foldercontents:default')
         self.applyProfile(portal, 'wildcard.foldercontents:test')
 
-WILDCARD_FOLDERCONTENTS_FIXTURE = WildcardFoldercontentsLayer()
+FIXTURE = WildcardFoldercontentsLayer()
 
-WILDCARD_FOLDERCONTENTS_ROBOT_TESTING = FunctionalTesting(
+ROBOT_TESTING = FunctionalTesting(
     bases=(AUTOLOGIN_LIBRARY_FIXTURE,
            z2.ZSERVER_FIXTURE,
-           WILDCARD_FOLDERCONTENTS_FIXTURE, ),
+           FIXTURE, ),
     name="WildcardFoldercontents:Robot")

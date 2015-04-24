@@ -11,10 +11,12 @@ Suite Teardown  Teardown
 
 *** Variables ***
 
+
 *** Keywords ***
 
 Setup
-    Open test browser
+    # Drag and Drop has problems in Firefox, use phantomjs instead.
+    Open Browser  ${PLONE_URL}  phantomjs
     Set Window Size  1024  768
     Enable autologin as  Manager
     Go to  ${PLONE_URL}
@@ -42,6 +44,7 @@ Set Folder Order
 *** Test Cases ***
 
 Check Natural Sorting
+    [Documentation]  The folder should list its content in the physical order by default.
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
     Capture Page Screenshot
@@ -52,9 +55,9 @@ Check Natural Sorting
     Table Row Should Contain  listing-table  1  doc 2
     Table Row Should Contain  listing-table  2  doc 1
     Table Row Should Contain  listing-table  3  doc 3
-    Click Entry In Display Sort Menu  Ascending order
 
 Check Display Sorting
+    [Documentation]  See we can temporarily display the folder ordered by various criteria.
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
     Click Entry In Display Sort Menu  Title
@@ -62,7 +65,7 @@ Check Display Sorting
     Table Row Should Contain  listing-table  1  doc 1
     Table Row Should Contain  listing-table  2  doc 2
     Table Row Should Contain  listing-table  3  doc 3
-    # Check manual reordering is deactivated
+    Log  Check manual reordering is deactivated
     Element Should Not Be Visible  foldercontents-order-column
     Click Entry In Display Sort Menu  Descending order
     Table Row Should Contain  listing-table  1  doc 3
@@ -71,6 +74,7 @@ Check Display Sorting
     Click Entry In Display Sort Menu  Ascending order
 
 Check Manual Reordering
+    [Documentation]  Test it is possible to reorder folder items with drag and drop.
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
     Click Entry In Display Sort Menu  Folder Order
@@ -78,27 +82,28 @@ Check Manual Reordering
     Table Row Should Contain  listing-table  1  doc 2
     Table Row Should Contain  listing-table  2  doc 3
     Table Row Should Contain  listing-table  3  doc 1
-    # New order should survive page reload, see if the backend persisted the changes
+    Log  New order should survive page reload, see if the backend persisted the changes
     Reload Page
     Table Row Should Contain  listing-table  1  doc 2
     Table Row Should Contain  listing-table  2  doc 3
     Table Row Should Contain  listing-table  3  doc 1
 
 Test Static Folder Ordering
+    [Documentation]  Check the support for pernament sortig after one criteria.
     Go to  ${PLONE_URL}/test
     Click Contents In Edit Bar
-    # Switch to Title Sort
+    Log  Switch to Title Sort
     Set Folder Order  Title
     Capture Page Screenshot
     Table Row Should Contain  listing-table  1  doc 1
     Table Row Should Contain  listing-table  2  doc 2
     Table Row Should Contain  listing-table  3  doc 3
-    # Check manual reordering is deactivated
+    Log  Check manual reordering is deactivated
     Element Should Not Be Visible  foldercontents-order-column
     Open Doc Menu  doc-1
     Page Should Not Contain Link  Move to top
     Page Should Not Contain Link  Move to bottom
-    # Test sort order reflects new content
+    Log  Test sort order reflects new content
     Go to  ${PLONE_URL}/test
     Add Page  doc 0
     Go to  ${PLONE_URL}/test
@@ -111,17 +116,17 @@ Test Static Folder Ordering
     Table Row Should Contain  listing-table  3  doc 2
     Table Row Should Contain  listing-table  4  doc 3
     Table Row Should Contain  listing-table  5  doc 4
-    # Return to Manual ordering
+    Log  Return to Manual ordering
     Set Folder Order  Manual
     Capture Page Screenshot
-    # The old content should appear in the original order ...
+    Log  The old content should appear in the original order ...
     Table Row Should Contain  listing-table  1  doc 3
     Table Row Should Contain  listing-table  2  doc 1
     Table Row Should Contain  listing-table  3  doc 2
-    # ... and the new at the end in order of creation
+    Log  ... and the new at the end in order of creation
     Table Row Should Contain  listing-table  4  doc 0
     Table Row Should Contain  listing-table  5  doc 4
-    # Now try with reversed Order
+    Log  Now try with reversed Order
     Set Folder Order  Title  reverse=${true}
     Table Row Should Contain  listing-table  1  doc 4
     Table Row Should Contain  listing-table  2  doc 3

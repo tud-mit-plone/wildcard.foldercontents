@@ -12,6 +12,7 @@ Suite Teardown  Teardown
 
 ${EMPTY_FOLDER_MESSAGE}  css=#folderlisting-main-table-noplonedrag p.discreet
 
+
 *** Keywords ***
 
 Setup

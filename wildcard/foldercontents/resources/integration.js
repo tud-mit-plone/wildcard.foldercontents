@@ -115,6 +115,7 @@ fc = {
 
 
         $('#content-core').delegate('#listing-table input[type="checkbox"]', 'change', function(event) {
+            fc.updateFormButtonStates();
             if (shifted && last_checked !== null) {
                 var self, last_checked_index, this_index;
                 //find closest sibling
@@ -140,6 +141,7 @@ fc = {
 
     initializeTable: function()
     {
+        fc.updateFormButtonStates();
         $('#upload-files').click(function() {
             fc.setUploadFormVisibility(!$('#upload-files').hasClass('active'));
             return false;
@@ -224,6 +226,24 @@ fc = {
                  width:'40%'
              }
         );
+    },
+    updateFormButtonStates: function() {
+        // toggle availability of folder actions if selection is empty
+        var enable = $('#listing-table input[type="checkbox"]:checked').length > 0
+        var actions = [
+            'folder_copy:method',
+            'folder_cut:method',
+            'folder_rename_form:method',
+            'folder_delete:method',
+            'content_status_history:method',
+            '@@export_form:method'
+        ];
+        $("#folderContentsForm input:submit").each(function() {
+            $btn = $(this);
+            if (actions.indexOf($btn.attr('name')) != -1) {
+                $btn.prop('disabled', !enable);
+            }
+        })
     }
 };
 

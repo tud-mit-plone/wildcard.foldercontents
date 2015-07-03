@@ -238,7 +238,7 @@ fc = {
             'content_status_history:method',
             '@@export_form:method'
         ];
-        $("#folderContentsForm input:submit").each(function() {
+        $("form[name='folderContentsForm'] input:submit").each(function() {
             $btn = $(this);
             if (actions.indexOf($btn.attr('name')) != -1) {
                 $btn.prop('disabled', !enable);
@@ -260,15 +260,21 @@ fc = {
             'dataType': 'json',
             'formData': {
                 '_authenticator': $('input[name="_authenticator"]').attr('value')
-            }
-        }).bind('fileuploadstop', function(e, data)
-        {
-            // clear the upload queue
-            $('#fileupload table tbody.files').empty();
-            // then reload the table
-            fc.reloadPage();
-            // finally hide the form
-            fc.setUploadFormVisibility(false);
+            },
+            maxChunkSize: 5000000
+        }).bind('fileuploadcompleted', function(){
+            fc.showLoading();
+            $.ajax({
+                url: window.location.href,
+                success: function(data) {
+                    // clear the upload queue
+                    $('#fileupload table tbody.files').empty();
+                    // then reload the table
+                    fc.reloadPage();
+                    // finally hide the form
+                    fc.setUploadFormVisibility(false);
+                }
+            });
         });
     });
 }(jQuery));

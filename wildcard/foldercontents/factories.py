@@ -50,8 +50,11 @@ class ATCTFileFactory(object):
             obj = ploneutils._createObjectByType(type_,
                                                  self.context, newid)
             mutator = obj.getPrimaryField().getMutator(obj)
-            mutator(data, content_type=content_type)
+            mutator(data, content_type=content_type, filename=name)
             obj.setTitle(name)
+            if hasattr(obj, 'setFilename'):
+                # if chunk uploaded, needs override
+                obj.setFilename(name)
             obj.reindexObject()
 
             notify(ObjectInitializedEvent(obj))

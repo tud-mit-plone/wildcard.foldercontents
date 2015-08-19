@@ -258,10 +258,10 @@ fc = {
             'limitConcurrentUploads': 2,
             'singleFileUploads': true,
             'dataType': 'json',
+            'maxChunkSize': 5000000,
             'formData': {
                 '_authenticator': $('input[name="_authenticator"]').attr('value')
-            },
-            maxChunkSize: 5000000
+            }
         }).bind('fileuploadcompleted', function(){
             fc.showLoading();
             $.ajax({
